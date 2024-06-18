@@ -4,12 +4,10 @@ import { useCommitText } from "@/hooks/useCommitText";
 import { useHelia } from "@/hooks/useHelia";
 import { useCommitFile } from "./hooks/useCommitFile";
 
-// const $ = (selector) => document.querySelector(selector);
-
 function App() {
 	const [text, setText] = useState("");
 	const [file, setFile] = useState();
-	const { error, starting, peers } = useHelia();
+	const { helia, error, starting, peers } = useHelia();
 	const [fileCid, setFileCid] = useState("");
 	const [cidString, setCidString] = useState("");
 	const [committedFile, setCommittedFile] = useState();
@@ -44,9 +42,18 @@ function App() {
 					paddingBottom: "4px",
 				}}
 			>
-				Helia Status
-				{!error && !starting && (
-					<div>Conected Peers: {peers.length}</div>
+				Helia Status:{" "}
+				{error ? "Error" : starting ? "Starting" : "Running"}
+				{helia && !error && !starting && (
+					<p>ID: {helia.libp2p.peerId.toString()}</p>
+				)}
+				{helia && !error && !starting && (
+					<>
+						<div>Conected Peers: {peers.length}</div>
+						<button onClick={() => console.log(peers)}>
+							Log pers
+						</button>
+					</>
 				)}
 			</div>
 			<div>

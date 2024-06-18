@@ -28,6 +28,7 @@ export const HeliaContext = createContext({
 	fs: null,
 	error: false,
 	starting: true,
+	peers: [],
 });
 
 export const HeliaProvider = ({ children }) => {
@@ -57,9 +58,7 @@ export const HeliaProvider = ({ children }) => {
 						await datastore.open();
 
 						const libp2p = await createLibp2p({
-							transports: [
-								webSockets(),
-							],
+							transports: [webSockets()],
 							connectionEncryption: [noise()],
 							streamMuxers: [yamux()],
 							datastore: datastore,
@@ -101,22 +100,32 @@ export const HeliaProvider = ({ children }) => {
 
 						await helia.libp2p.services.dht.setMode("server");
 
-						helia.libp2p.addEventListener("peer:connect", (evt) => {
-							setPeers([...peers, evt.detail.toString()]);
-						});
 						helia.libp2p.addEventListener(
-							"peer:disconnect",
+							"peer:discovery",
 							(evt) => {
-								setPeers(
-									peers.filter(
-										(id) => id !== evt.detail.toString()
-									)
+								console.log(
+									"discovered",
+									evt.detail.toString()
 								);
 							}
 						);
 
-						console.log("helia created");
-						
+						helia.libp2p.addEventListener("peer:connect", (evt) => {
+							console.log("connected", evt.detail.toString());
+							setPeers(helia.libp2p.getPeers());
+						});
+
+						helia.libp2p.addEventListener(
+							"peer:disconnect",
+							(evt) => {
+								console.log(
+									"disconnected",
+									evt.detail.toString()
+								);
+								setPeers(helia.libp2p.getPeers());
+							}
+						);
+
 						setHelia(helia);
 						setStarting(false);
 					});
