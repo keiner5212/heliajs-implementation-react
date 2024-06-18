@@ -8,15 +8,42 @@ importers:
 
   .:
     dependencies:
+      '@chainsafe/libp2p-noise':
+        specifier: ^15.0.0
+        version: 15.0.0
+      '@chainsafe/libp2p-yamux':
+        specifier: ^6.0.2
+        version: 6.0.2
       '@helia/unixfs':
         specifier: ^3.0.0
         version: 3.0.6
+      '@libp2p/autonat':
+        specifier: ^1.0.22
+        version: 1.0.22
+      '@libp2p/bootstrap':
+        specifier: ^10.0.25
+        version: 10.0.25
+      '@libp2p/dcutr':
+        specifier: ^1.0.22
+        version: 1.0.22
+      '@libp2p/identify':
+        specifier: ^2.0.3
+        version: 2.0.3
+      '@libp2p/kad-dht':
+        specifier: ^12.0.18
+        version: 12.0.18
+      '@libp2p/upnp-nat':
+        specifier: ^1.1.0
+        version: 1.1.0
       '@libp2p/websockets':
         specifier: ^8.0.25
         version: 8.0.25
       blockstore-idb:
         specifier: ^1.1.8
         version: 1.1.8
+      datastore-idb:
+        specifier: ^2.1.9
+        version: 2.1.9
       helia:
         specifier: ^4.0.1
         version: 4.2.3(react-native@0.74.2(@babel/core@7.24.7)(@babel/preset-env@7.24.7(@babel/core@7.24.7))(@types/react@18.3.3)(react@18.3.1))
@@ -1913,6 +1940,9 @@ packages:
 
   datastore-core@9.2.9:
     resolution: {integrity: sha512-wraWTPsbtdE7FFaVo3pwPuTB/zXsgwGGAm8BgBYwYAuzZCTS0MfXmd/HH1vR9s0/NFFjOVmBkGiWCvKxZ+QjVw==}
+
+  datastore-idb@2.1.9:
+    resolution: {integrity: sha512-o1LAE2VgVMeEWOP/zHYHV6MetGzbN+C72nRRUFwPXk0xLopsPN9wlH73D3De3pyDZKoKp2875XDFpRkDJ8mGWA==}
 
   dayjs@1.11.11:
     resolution: {integrity: sha512-okzr3f11N6WuqYtZSvm+F776mB41wRZMhKP+hc34YdW+KmtYYK9iqvHSwo2k9FEH3fhGXvOPV6yz2IcSrfRUDg==}
@@ -6947,6 +6977,16 @@ snapshots:
       it-pushable: 3.2.3
       it-sort: 3.0.6
       it-take: 3.0.6
+    transitivePeerDependencies:
+      - supports-color
+
+  datastore-idb@2.1.9:
+    dependencies:
+      datastore-core: 9.2.9
+      idb: 8.0.0
+      interface-datastore: 8.2.11
+      it-filter: 3.1.1
+      it-sort: 3.0.6
     transitivePeerDependencies:
       - supports-color
 

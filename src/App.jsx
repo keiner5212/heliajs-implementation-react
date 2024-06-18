@@ -9,19 +9,21 @@ import { useCommitFile } from "./hooks/useCommitFile";
 function App() {
 	const [text, setText] = useState("");
 	const [file, setFile] = useState();
-	const { error, starting } = useHelia();
+	const { error, starting, peers } = useHelia();
 	const [fileCid, setFileCid] = useState("");
 	const [cidString, setCidString] = useState("");
 	const [committedFile, setCommittedFile] = useState();
-  const [committedText, setCommittedText] = useState()
+	const [committedText, setCommittedText] = useState();
 	const { commitFile, fetchCommittedFile } = useCommitFile(
-		setFileCid, setCommittedFile
+		setFileCid,
+		setCommittedFile
 	);
 	const [fileType, setFileType] = useState("");
 	const [fileName, setFileName] = useState("");
 
 	const { commitText, fetchCommittedText } = useCommitText(
-		setCidString, setCommittedText
+		setCidString,
+		setCommittedText
 	);
 
 	useEffect(() => {
@@ -43,6 +45,9 @@ function App() {
 				}}
 			>
 				Helia Status
+				{!error && !starting && (
+					<div>Conected Peers: {peers.length}</div>
+				)}
 			</div>
 			<div>
 				<p>Texts</p>

@@ -3,6 +3,7 @@
 import { useCallback } from "react";
 import { useHelia } from "@/hooks/useHelia";
 import { CID } from "multiformats/cid";
+import { provideCid } from "./useHelia";
 
 function getUint8ArrayFromFile(file) {
 	return new Promise((resolve, reject) => {
@@ -29,6 +30,7 @@ export const useCommitFile = (setCidString, setCommittedFile) => {
 					const buffer = await getUint8ArrayFromFile(file);
 					const cid = await fs.addBytes(buffer, helia.blockstore);
 					setCidString(cid.toString());
+					await provideCid(cid, helia);
 				} catch (e) {
 					console.error(e);
 				}
