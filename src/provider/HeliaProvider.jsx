@@ -62,11 +62,6 @@ export const HeliaProvider = ({ children }) => {
 							connectionEncryption: [noise()],
 							streamMuxers: [yamux()],
 							datastore: datastore,
-							identify: {
-								host: {
-									agentVersion: "helia/0.0.0",
-								},
-							},
 							peerDiscovery: [
 								bootstrap({
 									list: [
@@ -100,28 +95,13 @@ export const HeliaProvider = ({ children }) => {
 
 						await helia.libp2p.services.dht.setMode("server");
 
-						helia.libp2p.addEventListener(
-							"peer:discovery",
-							(evt) => {
-								console.log(
-									"discovered",
-									evt.detail.toString()
-								);
-							}
-						);
-
 						helia.libp2p.addEventListener("peer:connect", (evt) => {
-							console.log("connected", evt.detail.toString());
 							setPeers(helia.libp2p.getPeers());
 						});
 
 						helia.libp2p.addEventListener(
 							"peer:disconnect",
 							(evt) => {
-								console.log(
-									"disconnected",
-									evt.detail.toString()
-								);
 								setPeers(helia.libp2p.getPeers());
 							}
 						);

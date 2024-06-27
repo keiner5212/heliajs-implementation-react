@@ -5,9 +5,9 @@ import './index.css'
 import { HeliaProvider } from '@/provider/HeliaProvider'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <HeliaProvider>
       <App />
     </HeliaProvider>
-  </React.StrictMode>
+  // </React.StrictMode>
 )

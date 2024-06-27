@@ -45,7 +45,11 @@ function App() {
 				Helia Status:{" "}
 				{error ? "Error" : starting ? "Starting" : "Running"}
 				{helia && !error && !starting && (
-					<p>ID: {helia.libp2p.peerId.toString()}</p>
+					<>
+						<p>ID: {helia.libp2p.peerId.toString()}</p>
+						<br />
+						<p>Multiaddr: /p2p/{helia.libp2p.peerId.toString()}</p>
+					</>
 				)}
 				{helia && !error && !starting && (
 					<>
