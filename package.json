@@ -13,6 +13,7 @@
     "test": "npm run build && test-browser-example test"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.600.0",
     "@chainsafe/libp2p-noise": "^15.0.0",
     "@chainsafe/libp2p-yamux": "^6.0.2",
     "@helia/unixfs": "^3.0.0",
@@ -26,6 +27,7 @@
     "@libp2p/webrtc": "^4.1.0",
     "@libp2p/websockets": "^8.0.25",
     "blockstore-idb": "^1.1.8",
+    "blockstore-s3": "^1.0.15",
     "datastore-idb": "^2.1.9",
     "helia": "^4.0.1",
     "libp2p": "^1.5.1",

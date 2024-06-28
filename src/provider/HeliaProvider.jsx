@@ -9,6 +9,8 @@ import { identify, identifyPush } from "@libp2p/identify";
 import { autoNAT } from "@libp2p/autonat";
 import { dcutr } from "@libp2p/dcutr";
 import { kadDHT } from "@libp2p/kad-dht";
+import { S3 } from '@aws-sdk/client-s3'
+import { S3Blockstore } from 'blockstore-s3'
 
 import {
 	useEffect,
@@ -18,6 +20,7 @@ import {
 	createContext,
 } from "react";
 import { createLibp2p } from "libp2p";
+import RootNoExtensionShardingStrategy from "./RootNoExtensionShardingStrategy";
 
 export function isWebTransportSupported() {
 	return typeof window.WebTransport !== "undefined";
@@ -50,11 +53,29 @@ export const HeliaProvider = ({ children }) => {
 				console.info("Starting Helia");
 				if (isWebTransportSupported()) {
 					import("helia").then(async ({ createHelia }) => {
-						const blockstore = new IDBBlockstore("blockstore-hello-app");
+						const s3 = new S3({
+							endpoint: import.meta.env.VITE_PP_S3_REGION_ENDPOINT,
+							region: import.meta.env.VITE_PP_S3_REGION,
+							credentials: {
+								accessKeyId: import.meta.env
+									.VITE_APP_S3_ACCESSKEY,
+								secretAccessKey: import.meta.env
+									.VITE_APP_S3_SECRETKEY,
+							},
+						});
+
+						const blockstore = new S3Blockstore(
+							s3,
+							import.meta.env.VITE_APP_S3_BUCKET,
+							{
+								createIfMissing: false,
+								shardingStrategy: new RootNoExtensionShardingStrategy(),
+							}
+						);
+
 						const datastore = new IDBDatastore(
 							"datastore-hello-app"
 						);
-						await blockstore.open();
 						await datastore.open();
 
 						// const libp2p = await createLibp2p({

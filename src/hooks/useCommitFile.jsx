@@ -30,7 +30,7 @@ export const useCommitFile = (setCidString, setCommittedFile) => {
 					const buffer = await getUint8ArrayFromFile(file);
 					const cid = await fs.addBytes(buffer);
 					setCidString(cid.toString());
-					await provideCid(cid, helia);
+					// await provideCid(cid, helia);
 				} catch (e) {
 					console.error(e);
 				}
