@@ -3,6 +3,7 @@
 import { useCallback } from "react";
 import { useHelia } from "@/hooks/useHelia";
 import { CID } from "multiformats/cid";
+import { provideCid } from "./useHelia";
 
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
@@ -19,7 +20,7 @@ export const useCommitText = (setCidString, setCommittedText) => {
 						helia.blockstore
 					);
 					setCidString(cid.toString());
-					console.log("Added file:", cid.toString());
+					await provideCid(cid, helia);
 				} catch (e) {
 					console.error(e);
 				}

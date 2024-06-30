@@ -1,5 +1,4 @@
 import { unixfs } from "@helia/unixfs";
-import { webSockets } from "@libp2p/websockets";
 import { noise } from "@chainsafe/libp2p-noise";
 import { yamux } from "@chainsafe/libp2p-yamux";
 import { IDBBlockstore } from "blockstore-idb";
@@ -18,6 +17,8 @@ import {
 	createContext,
 } from "react";
 import { createLibp2p } from "libp2p";
+// import { webRTC } from "@libp2p/webrtc";
+import { webSockets } from "@libp2p/websockets";
 
 export function isWebTransportSupported() {
 	return typeof window.WebTransport !== "undefined";
@@ -50,7 +51,9 @@ export const HeliaProvider = ({ children }) => {
 				console.info("Starting Helia");
 				if (isWebTransportSupported()) {
 					import("helia").then(async ({ createHelia }) => {
-						const blockstore = new IDBBlockstore("blockstore-hello-app");
+						const blockstore = new IDBBlockstore(
+							"blockstore-hello-app"
+						);
 						const datastore = new IDBDatastore(
 							"datastore-hello-app"
 						);
@@ -58,7 +61,13 @@ export const HeliaProvider = ({ children }) => {
 						await datastore.open();
 
 						// const libp2p = await createLibp2p({
-						// 	transports: [webSockets()],
+						// 	// addresses: {
+						// 	// 	listen: ["/webrtc"],
+						// 	// },
+						// 	transports: [
+						// 		// webRTC(), 
+						// 		webSockets()
+						// 	],
 						// 	connectionEncryption: [noise()],
 						// 	streamMuxers: [yamux()],
 						// 	datastore: datastore,
