@@ -12,15 +12,16 @@ export const useCommitText = (setCidString, setCommittedText) => {
 	const { helia, fs, error, starting } = useHelia();
 
 	const commitText = useCallback(
-		async (text) => {
+		async (text, setLoading) => {
 			if (!error && !starting) {
 				try {
 					const cid = await fs.addBytes(
 						encoder.encode(text),
 						helia.blockstore
 					);
-					setCidString(cid.toString());
 					await provideCid(cid, helia);
+					setCidString(cid.toString());
+					setLoading(false);
 				} catch (e) {
 					console.error(e);
 				}

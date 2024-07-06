@@ -23,14 +23,15 @@ export const useCommitFile = (setCidString, setCommittedFile) => {
 	const { helia, fs, error, starting } = useHelia();
 
 	const commitFile = useCallback(
-		async (file) => {
+		async (file, setLoading) => {
 			if (!error && !starting) {
 				setCommittedFile(null);
 				try {
 					const buffer = await getUint8ArrayFromFile(file);
 					const cid = await fs.addBytes(buffer);
-					setCidString(cid.toString());
 					await provideCid(cid, helia);
+					setCidString(cid.toString());
+					setLoading(false);
 				} catch (e) {
 					console.error(e);
 				}

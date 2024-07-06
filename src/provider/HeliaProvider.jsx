@@ -60,41 +60,38 @@ export const HeliaProvider = ({ children }) => {
 						await blockstore.open();
 						await datastore.open();
 
-						// const libp2p = await createLibp2p({
-						// 	// addresses: {
-						// 	// 	listen: ["/webrtc"],
-						// 	// },
-						// 	transports: [
-						// 		// webRTC(), 
-						// 		webSockets()
-						// 	],
-						// 	connectionEncryption: [noise()],
-						// 	streamMuxers: [yamux()],
-						// 	datastore: datastore,
-						// 	peerDiscovery: [
-						// 		bootstrap({
-						// 			list: [
-						// 				"/dnsaddr/bootstrap.libp2p.io/p2p/QmNnooDu7bfjPFoTZYxMNLWUQJyrVwtbZg5gBMjTezGAJN",
-						// 				"/dnsaddr/bootstrap.libp2p.io/p2p/QmQCU2EcMqAqQPR2i9bChDtGNJchTbq5TbXJJ16u19uLTa",
-						// 				"/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb",
-						// 				"/dnsaddr/bootstrap.libp2p.io/p2p/QmcZf59bWwK5XFi76CZX8cbJ4BhTzzA3gU1ZjYZcYW3dwt",
-						// 			],
-						// 		}),
-						// 	],
-						// 	services: {
-						// 		identify: identify(),
-						// 		identifyPush: identifyPush(),
-						// 		autoNAT: autoNAT(),
-						// 		dcutr: dcutr(),
-						// 		dht: kadDHT({
-						// 			protocol: "/ipfs/kad/1.0.0",
-						// 		}),
-						// 	},
-						// });
+						const libp2p = await createLibp2p({
+							transports: [
+								webSockets()
+							],
+							connectionEncryption: [noise()],
+							streamMuxers: [yamux()],
+							datastore: datastore,
+							peerDiscovery: [
+								bootstrap({
+									list: [
+										"/dnsaddr/bootstrap.libp2p.io/p2p/QmNnooDu7bfjPFoTZYxMNLWUQJyrVwtbZg5gBMjTezGAJN",
+										"/dnsaddr/bootstrap.libp2p.io/p2p/QmQCU2EcMqAqQPR2i9bChDtGNJchTbq5TbXJJ16u19uLTa",
+										"/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb",
+										"/dnsaddr/bootstrap.libp2p.io/p2p/QmcZf59bWwK5XFi76CZX8cbJ4BhTzzA3gU1ZjYZcYW3dwt",
+									],
+								}),
+							],
+							services: {
+								identify: identify(),
+								identifyPush: identifyPush(),
+								autoNAT: autoNAT(),
+								dcutr: dcutr(),
+								dht: kadDHT({
+									protocol: "/ipfs/kad/1.0.0",
+								}),
+							},
+						});
 
-						// await libp2p.start();
+						await libp2p.start();
 
 						const helia = await createHelia({
+							libp2p,
 							datastore,
 							blockstore,
 						});

@@ -7,7 +7,11 @@ export const useHelia = () => {
 };
 
 export async function provideCid(cid, helia) {
+
+	const startTime = Date.now();
 	for await (const event of helia.libp2p.services.dht.provide(cid)) {
-		console.log(event)
+		console.log("Providing...");
 	 }
+
+	console.log(`Provided in ${Date.now() - startTime}ms`);
 }

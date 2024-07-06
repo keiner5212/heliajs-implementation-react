@@ -18,6 +18,7 @@ function App() {
 	);
 	const [fileType, setFileType] = useState("");
 	const [fileName, setFileName] = useState("");
+	const [loading, setLoading] = useState(false);
 
 	const { commitText, fetchCommittedText } = useCommitText(
 		setCidString,
@@ -68,9 +69,16 @@ function App() {
 					onChange={(event) => setText(event.target.value)}
 					type="text"
 				/>
-				<button id="commitTextButton" onClick={() => commitText(text)}>
+				<button
+					id="commitTextButton"
+					onClick={() => {
+						setLoading(true);
+						commitText(text, setLoading);
+					}}
+				>
 					Add Text To Node
 				</button>
+				{loading && <p>Loading...</p>}
 				<div id="cidOutput">
 					textCid:
 					<input
@@ -103,9 +111,16 @@ function App() {
 						setFileType(event.target.files[0].type);
 					}}
 				/>
-				<button id="commitFileButton" onClick={() => commitFile(file)}>
+				<button
+					id="commitFileButton"
+					onClick={() => {
+						setLoading(true);
+						commitFile(file, setLoading);
+					}}
+				>
 					Add File To Node
 				</button>
+				{loading && <p>Loading...</p>}
 
 				<div id="cidOutput">
 					file info:
